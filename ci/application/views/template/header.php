@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Photo Blog meets Etsy">
     <meta name="author" content="Jeanna Anderson">
+
+    <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/img/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="<?php echo base_url(); ?>assets/img/favicon.ico" type="image/x-icon">
 	
 	<!-- Bootstrap core CSS -->
     <link href="<?php echo base_url(); ?>assets/css/bootstrap.css" rel="stylesheet">
@@ -14,7 +17,7 @@
 
     <!-- Add custom CSS here -->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/css/stylesheet.css">
-	<!--<script src="//use.edgefonts.net/poiret-one.js"></script> -->
+	<script src="//use.edgefonts.net/poiret-one.js"></script> 
 	
 	</style>
 </head>
