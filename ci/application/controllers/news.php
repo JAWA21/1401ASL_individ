@@ -4,6 +4,8 @@ class News extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+
+		$this->load->helper('url');
 		$this->load->model('news_model');
 	}
 
@@ -11,6 +13,13 @@ class News extends CI_Controller {
 	{
 		$data['news'] = $this->news_model->get_news();
 		$data['title'] = 'News archive';
+
+
+   $data['heading']="Testing of blog page";
+   $data['base']= $this->config->item('base_url');
+   $data['css']= $this->config->item('css');
+  
+   // $this->load->view("blog_view",$data);
 
 		$this->load->view('templates/header', $data);
 		$this->load->view('news/index', $data);

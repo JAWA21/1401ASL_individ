@@ -1,0 +1,24 @@
+<?php
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class Message_model extends CI_Model {
+
+    public function __construct()
+    {
+        parent::__construct();
+        // $this->load->database();
+    }
+    public function add_message()
+    {
+        $data=array(
+            'name'=>$_POST['name'],
+            'email'=>$_POST['email'],
+            'message'=>$_POST['message']
+            );
+        $this->db->insert('message',$data);
+
+        $this->load->helper('url');
+        redirect("/home/index");
+    }
+}
+?>
