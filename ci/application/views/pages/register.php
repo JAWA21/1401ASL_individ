@@ -31,7 +31,7 @@
               </div>
               <div class="form-group col-lg-12">
                 <input type="hidden" name="save" value="contact">
-                <button type="submit" class="btn btn-default">Submit</button>
+                <button type="submit" class="btn btn-default pull-right">Submit</button>
               </div>
           </div>
         </form>

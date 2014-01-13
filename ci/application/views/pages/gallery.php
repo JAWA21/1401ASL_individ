@@ -1,3 +1,4 @@
+<div class="container">
 <aside id="categ">
     <ul>
         <li>Cars</li>
@@ -44,6 +45,7 @@
     </div>
 
     
+</div>
 </div>
 </body>
 </html>

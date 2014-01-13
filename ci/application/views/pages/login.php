@@ -19,7 +19,7 @@
               <input type="phone" class="form-control">
             </div>
             <div class=" col-lg-5">
-              <a href="/index.php/signup" class="pull-right">Register</a>
+              <a href="/index.php/register" class="btn pull-left">Register</a>
             </div>
          
             <div class="form-group col-lg-12">
