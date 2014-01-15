@@ -5,3 +5,13 @@
 	<h4><?php echo anchor('user/logout', 'Logout', $onclick); ?></h4>
 
 </div><!--<div class="content">-->
+
+<?php echo form_open_multipart('gallery/do_upload');?>
+
+<input type="file" name="userfile" size="20" />
+
+<br /><br />
+
+<input type="submit" value="upload" class="btn btn-success"/>
+
+</form>

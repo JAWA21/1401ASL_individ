@@ -4,10 +4,14 @@ class User extends CI_Controller{
 	{
 		parent::__construct();
 		$this->load->model('user_model');
+		$this->load->model('gallery_model');
 	}
 	public function index()
 	{
+		$photoArr['photoArr']=$this->gallery_model->read_photos();
 		$data['title']= 'Home';
+		$data = array_merge($data, $photoArr);
+		
 		$this->load->view('includes/header',$data);
 		$this->load->view('pages/home', $data);
 		$this->load->view('includes/footer',$data);
