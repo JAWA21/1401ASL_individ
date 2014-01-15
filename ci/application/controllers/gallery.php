@@ -3,14 +3,18 @@ class Gallery extends CI_Controller{
 	public function __construct()
 	{
 		parent::__construct();
-		// $this->load->model('user_model');
+		$this->load->model('gallery_model');
 	}
 
 	public function gallery_view()
 	{
-		$data['title']= 'Gallery';
+		$photoArr['photoArr']=$this->gallery_model->read_photos();
+		//$data['title']= 'Gallery';
+		//$data = array_merge($data, $photoArr);
+		print_r($photoArr);
+		
 		$this->load->view('includes/header',$data);
-		$this->load->view('pages/gallery_view.php', $data);
+		$this->load->view('pages/gallery_view.php',$photoArr);
 		$this->load->view('includes/footer',$data);
 	}
 }
