@@ -4,29 +4,24 @@ class Gallery_model extends CI_Model {
 	public function create_photos($data)
 	{
 		$this->load->helper(array('form', 'url'));
+		//$this->load->library('upload', $config);
 
-		$this->load->library('upload', $config);
+		$user = $data['user_id'];
 
 		$data = array(
-			'title' => $this->input->post('title'),
-			'slug' => $slug,
-			'text' => $this->input->post('text')
+			'make' => $data["make"],
+			'model' => $data["model"],
+			//$data["date_time"] = $raw_exif["EXIF"]["DateTimeOriginal"];
+			'exposure_time' =>$data["exposure_time"],	
+			'f_number' => $data["f_number"],
+			'iso_speed' => $data["iso_speed"],
+			'orig_name' => $data["orig_name"],
+			'pTitle' => $data["title"],
+			'pDesc' => $data["desc"]
+			//$data["shutter_speed"] = $raw_exif["EXIF"]["ShutterSpeedValue"];
 		);
-
+		$this->db->where("userID", $user);
 		return $this->db->insert('photos', $data);
-
-		if ( ! $this->upload->do_upload())
-		{
-			//$error = array('error' => $this->upload->display_errors());
-
-			$this->load->view('upload_form', $error);
-		}
-		else
-		{
-			$data = array('upload_data' => $this->upload->data());
-
-			$this->load->view('upload_success', $data);
-		}
 	}
 
 	public function read_photos()
@@ -40,6 +35,13 @@ class Gallery_model extends CI_Model {
 		// }
 		return $query->result_array();
 	}
+
+	public function read_onePhoto($ID)
+	{
+		$this->db->where("ID", $ID);
+		$query = $this->db->get('photos');
+
+		return $query->result_array();
+	}
 }
-?>
-	
+?>	

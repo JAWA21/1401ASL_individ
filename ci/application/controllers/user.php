@@ -1,11 +1,13 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class User extends CI_Controller{
+
 	public function __construct()
 	{
 		parent::__construct();
 		$this->load->model('user_model');
 		$this->load->model('gallery_model');
 	}
+
 	public function index()
 	{
 		$photoArr['photoArr']=$this->gallery_model->read_photos();
@@ -14,7 +16,7 @@ class User extends CI_Controller{
 		
 		$this->load->view('includes/header',$data);
 		$this->load->view('pages/home', $data);
-		$this->load->view('includes/footer',$data);
+		$this->load->view('includes/footer');
 	}
 
 	public function login_view()
@@ -24,35 +26,23 @@ class User extends CI_Controller{
 			$this->welcome();
 		}
 		else{
-			$data['title']= 'Home';
+			$data['title']= 'Login';
 			$this->load->view('includes/header',$data);
 			$this->load->view('registration_view.php', $data);
-			$this->load->view('includes/footer',$data);
+			$this->load->view('includes/footer');
 		}
 	}
-	public function welcome()
-	{
-		$data['title']= 'Welcome';
-		$this->load->view('includes/header',$data);
-		$this->load->view('welcome_view.php', $data);
-		$this->load->view('includes/footer',$data);
-	}
+
 	public function login()
 	{
 		$email=$this->input->post('email');
 		$password=md5($this->input->post('pass'));
 
-		$result=$this->user_model->login($email,$password);
-		if($result) $this->welcome();
+		$result['user']=$this->user_model->login($email,$password);
+		if($result) $this->welcome($result);
 		else        $this->index();
 	}
-	public function thank()
-	{
-		$data['title']= 'Thank';
-		$this->load->view('includes/header',$data);
-		$this->load->view('thank_view.php', $data);
-		$this->load->view('includes/footer',$data);
-	}
+
 	public function registration()
 	{
 		$this->load->library('form_validation');
@@ -72,6 +62,67 @@ class User extends CI_Controller{
 			$this->thank();
 		}
 	}
+
+	public function thank()
+	{
+		$data['title']= 'Thank';
+		$this->load->view('includes/header',$data);
+		$this->load->view('thank_view.php', $data);
+		$this->load->view('includes/footer');
+	}
+
+	public function welcome($result=null)
+	{
+		$data['title']= 'Welcome';
+		if($this->session->userdata('user_name')!="")
+		{
+			if($result != null)
+			{
+				$data = array_merge($data, $result);
+			}
+			$this->load->view('includes/header',$data);
+			$this->load->view('welcome_view.php', $data);
+			$this->load->view('includes/footer');
+		}else{
+			$this->login_view();
+		}
+	}
+	public function profile(){
+		if($this->session->userdata('user_name')!="")
+		{
+			$data['title']= 'Profile';
+			$this->load->view('includes/header',$data);
+			$this->load->view('pages/profile_view.php', $data);
+			$this->load->view('includes/footer');
+		}else{
+			$this->login_view();
+		}
+	}
+
+	public function orderStat(){
+		if($this->session->userdata('user_name')!="")
+		{
+			$data['title']= 'Orders';
+			$this->load->view('includes/header',$data);
+			$this->load->view('pages/orders_view.php', $data);
+			$this->load->view('includes/footer');
+		}else{
+			$this->login_view();
+		}
+	}
+
+	public function photosUp(){
+		if($this->session->userdata('user_name')!="")
+		{
+			$data['title']= 'Your Photos';
+			$this->load->view('includes/header',$data);
+			$this->load->view('pages/yPhotos.php', $data);
+			$this->load->view('includes/footer');
+		}else{
+			$this->login_view();
+		}
+	}
+
 	public function logout()
 	{
 		$newdata = array(
@@ -80,7 +131,7 @@ class User extends CI_Controller{
 		'user_email'     => '',
 		'logged_in' => FALSE,
 		);
-		$this->session->unset_userdata($newdata );
+		$this->session->unset_userdata($newdata);
 		$this->session->sess_destroy();
 		$this->index();
 	}

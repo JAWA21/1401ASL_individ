@@ -40,9 +40,15 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav">
-            <li><?php echo anchor('gallery/gallery_view', 'Gallery'); ?></li>
+            <li><?php if($this->session->userdata('user_name')!=""){echo anchor('gallery/gallery_view', 'Gallery'); }?></li>
             <li><?php echo anchor('cart/cart_view', 'Cart'); ?></li>
-            <li><?php echo anchor('user/login_view', 'Login'); ?></li>
+            <li><?php if($this->session->userdata('user_name')!=""){echo anchor('user/login_view', 'CMD Cntr'); }?></li>
+            <li><?php if($this->session->userdata('user_name')!=""){
+                        echo anchor('user/logout', 'Logout');
+                      }else{
+                        echo anchor('user/login_view', 'Login');
+                      } ?>
+              </li>
 
           </ul>
         </div><!-- /.navbar-collapse -->
