@@ -19,7 +19,7 @@ class Gallery extends CI_Controller{
 		$this->load->view('includes/footer',$data);
 	}
 
-	function do_upload()
+	public function do_upload()
 	{
 		$config =  array(
           'upload_path'     => dirname($_SERVER["SCRIPT_FILENAME"])."/assets/img/gallery/",
@@ -65,6 +65,8 @@ class Gallery extends CI_Controller{
 			//convert_time($time);
 			//print_r($data);  
 			$result['photoArr']=$this->gallery_model->create_photos($data);
+
+			redirect('/user/photosUp');
 			
 		}
 		else
@@ -75,9 +77,17 @@ class Gallery extends CI_Controller{
             //return $this->load->view('index.php/user/login',$data);
 	}
 
-	function convert_time($time)
+	public function update()
 	{
+		$photoArr['photoArr']=$this->gallery_model->update_photo($this->session->userdata('user_id'));
 
+		$data['title']= 'Your Photos';
+		$result['userPhotos']=$this->gallery_model->read_onePhoto($this->session->userdata('user_id'));
+		
+		$data = array_merge($data, $result);
+		$this->load->view('includes/header',$data);
+		$this->load->view('pages/yPhotos.php', $data);
+		$this->load->view('includes/footer');
 	}
 }
 ?>

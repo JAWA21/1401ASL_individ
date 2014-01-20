@@ -23,7 +23,7 @@ class User extends CI_Controller{
 	{
 		if(($this->session->userdata('user_name')!=""))
 		{
-			$this->welcome();
+			$this->login();
 		}
 		else{
 			$data['title']= 'Login';
@@ -78,8 +78,10 @@ class User extends CI_Controller{
 		{
 			if($result != null)
 			{
+				$result['userPhotos']=$this->gallery_model->read_onePhoto($this->session->userdata('user_id'));
 				$data = array_merge($data, $result);
 			}
+
 			$this->load->view('includes/header',$data);
 			$this->load->view('welcome_view.php', $data);
 			$this->load->view('includes/footer');
@@ -87,7 +89,8 @@ class User extends CI_Controller{
 			$this->login_view();
 		}
 	}
-	public function profile(){
+	public function profile()
+	{
 		if($this->session->userdata('user_name')!="")
 		{
 			$data['title']= 'Profile';
@@ -99,24 +102,54 @@ class User extends CI_Controller{
 		}
 	}
 
-	public function orderStat(){
+	// public function orderStat()
+	// {
+	// 	if($this->session->userdata('user_name')!="")
+	// 	{
+	// 		$data['title']= 'Orders';
+	// 		$this->load->view('includes/header',$data);
+	// 		$this->load->view('pages/orders_view.php', $data);
+	// 		$this->load->view('includes/footer');
+	// 	}else{
+	// 		$this->login_view();
+	// 	}
+	// }
+
+	public function photosUp()
+	{
 		if($this->session->userdata('user_name')!="")
 		{
-			$data['title']= 'Orders';
+			$data['title']= 'Your Photos';
+			$result['userPhotos']=$this->gallery_model->read_onePhoto($this->session->userdata('user_id'));
+			
+			$data = array_merge($data, $result);
 			$this->load->view('includes/header',$data);
-			$this->load->view('pages/orders_view.php', $data);
+			$this->load->view('pages/yPhotos.php', $data);
 			$this->load->view('includes/footer');
 		}else{
 			$this->login_view();
 		}
 	}
 
-	public function photosUp(){
+	public function update()
+	{
+		$data['title']= 'Profile';
 		if($this->session->userdata('user_name')!="")
 		{
-			$data['title']= 'Your Photos';
+			$ID = $this->session->userdata('user_id');
+			$user=$this->input->post('user_name');
+			$email=$this->input->post('email_address');
+			$oldpass=md5($this->input->post('old_password'));
+			$newpass=md5($this->input->post('password'));
+			$conpass=md5($this->input->post('con_password'));
+
+			if($newpass == $conpass){
+				$result['user']=$this->user_model->update_user($user,$email,$newpass, $oldpass,$ID);
+			}
+			
+			$data = array_merge($data, $result);
 			$this->load->view('includes/header',$data);
-			$this->load->view('pages/yPhotos.php', $data);
+			$this->load->view('pages/profile_view.php', $data);
 			$this->load->view('includes/footer');
 		}else{
 			$this->login_view();

@@ -10,10 +10,10 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/main.js">
     <script>
-	  // Activates the Carousel
-	 //  $('.carousel').carousel({
-		// interval: 5000
-	 //  })
+	  Activates the Carousel
+	  $('.carousel').carousel({
+		interval: 5000
+	  })
 	</script>
 
   </body>

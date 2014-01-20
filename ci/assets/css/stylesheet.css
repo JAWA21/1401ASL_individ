@@ -9,6 +9,12 @@
     font-style: normal;
 }
 
+html,
+body {
+  overflow-x: hidden; /* Prevent scroll on narrow devices */
+}
+
+
 html{
 	background-color: #5E5D5E;
 }
@@ -18,6 +24,10 @@ body{
 	font-family: 'caviar', 'Century Gothic', sans-serif;
 	background-color: #FFF;
 
+}
+
+footer {
+  padding: 30px 0;
 }
 
 a{
@@ -34,10 +44,6 @@ a:hover{
 
 ul{
 	list-style: none;
-}
-
-#footer{
-
 }
 
 #logo h1{
@@ -102,22 +108,10 @@ ul{
 	padding-left: 20px;
 }
 
+.cmd{
+	margin-top: 25px;
+}
 
-
-/*
- * Style tweaks
- * --------------------------------------------------
- */
-html,
-body {
-  overflow-x: hidden; /* Prevent scroll on narrow devices */
-}
-body {
-  padding-top: 70px;
-}
-footer {
-  padding: 30px 0;
-}
 
 /*
  * Off Canvas

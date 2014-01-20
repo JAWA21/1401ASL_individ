@@ -38,7 +38,8 @@ class User_model extends CI_Model {
 		$this->db->insert('users',$data);
 	}
 
-    public function get_user($ID){
+    public function get_user($ID)
+    {
         $this->db->where("ID",$ID);
             
         $query=$this->db->get("users");
@@ -48,21 +49,40 @@ class User_model extends CI_Model {
             {
                 //add all data to session
                 $newdata = array(
-                        'user_id'       => $rows->ID,
-                        'user_name'     => $rows->username,
-                        'password'      => $rows->password,
-                        'addressSt'     => $rows->addressSt,
-                        'addressCity'   => $rows->addressCity,
-                        'addressState'  => $rows->addressState,
-                        'addressZip'    => $rows->addressZip,
-                        'fname'         => $rows->fname,
-                        'lname'         => $rows->lname,
-                        'email'         => $rows->email,
-                        'logged_in'     => TRUE,
-                   );
+                    'user_id'       => $rows->ID,
+                    'user_name'     => $rows->username,
+                    'password'      => $rows->password,
+                    'addressSt'     => $rows->addressSt,
+                    'addressCity'   => $rows->addressCity,
+                    'addressState'  => $rows->addressState,
+                    'addressZip'    => $rows->addressZip,
+                    'fname'         => $rows->fname,
+                    'lname'         => $rows->lname,
+                    'email'         => $rows->email,
+                    'logged_in'     => TRUE,
+                );
             }
                 $this->session->set_userdata($newdata);
                 return $newdata;            
+        }
+    }
+
+    public function update_user($user,$email,$newpass,$ID)
+    {
+        $this->db->select('password');
+        $this->db->where("ID",$ID);
+        $query = $this->db->get('users');
+
+        if($query->num_rows()>0)
+        {
+            $data = array(
+               'user_name' => $user,
+               'password' => $newpass,
+               'email' => $$newpass
+            );
+
+            $this->db->where('id', $id);
+            $this->db->update('users', $data);
         }
     }
 }
